@@ -164,11 +164,13 @@ class _TarefaScreen extends State<TarefaScreen> {
 
     );
   }
+  //método que adiciona tarefa na lista
   void _adicionarTarefa(){
     final texto = _controller.text.trim();
     if(texto.isEmpty) return;
 
     setState(() {
+      //.add método de lista para adicionar elementos
       _tarefas.add(Tarefa(
         id: DateTime.now.toString(),
         titulo: texto,
@@ -177,12 +179,19 @@ class _TarefaScreen extends State<TarefaScreen> {
     _controller.clear();
     Navigator.pop(context);
   } 
-
+  //alterna o status da tarefa através do ID
   void _alternarStatus(String id){
     setState(() {
       final tarefa = _tarefas.firstWhere((t)=> t.id == id);
       tarefa.concluida = !tarefa.concluida;
     });
+  }
+
+  void _deletarTarefa(String id){
+    final index = _tarefas.indexWhere((t)=> t.id == id);
+    final tarefaRemovida = _tarefas[index];
+
+    setState(()=> _tarefas.removeAt(index));
   }
 //Toda Classe que tenha um Stateless ou statefull 
 //Precisa ter um Widget build(BuildContext context)
@@ -193,12 +202,10 @@ class _TarefaScreen extends State<TarefaScreen> {
     return Scaffold(
 // por aqui podemos definir algumas caracteristicas como cor de fundo app, tamanho fonte, cor letra,
       backgroundColor: const Color(0xFFF5F5F5),
-
       // quase todos os elementos
       // appbar - funciona como um header do html
       appBar: AppBar(
         title: Text('2Do MinimaList'),
-
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
@@ -221,20 +228,25 @@ class _TarefaScreen extends State<TarefaScreen> {
         itemCount: _tarefas.length,
         itemBuilder:(context, index) {
           final tarefa = _tarefas[index];
-          return Card(
+          //Aqui se encontra o método para gesticular e o celular entender as coisa
+          return Dismissible(
+            key: Key(tarefa.id),
+            direction: DismissDirection.endToStart,
+            onDismissed: (_) => _deletarTarefa(tarefa.id),
+            child: Card(
+              child:GestureDetector(
+
             child: ListTile(
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16, vertical: 8,
               ),
-              leading: CircleAvatar(
-                backgroundColor: tarefa.concluida
-                ? const Color(0xFFB2DFDB)
-                : const Color(0xFFE0E0E0),
-                child: Icon(
-                  tarefa.concluida ? Icons.check : Icons.radio_button_unchecked,
-                  color: tarefa.concluida ? const Color(0xFF00BFA5) : Colors.grey,
-                  size: 20,
+              leading: Checkbox(
+                value: tarefa.concluida,
+                activeColor: const Color(0xFF00BFA5),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadiusGeometry.circular(4),
                 ),
+                onChanged: (_) => _alternarStatus(tarefa.id) ,
               ),
               title: Text(
                 tarefa.titulo,
@@ -253,8 +265,10 @@ class _TarefaScreen extends State<TarefaScreen> {
                 ),
               ),
             ),
-          );
-        },
+          ),
+        ),
+      );
+    },
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _abrirBottomSheet,
