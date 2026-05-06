@@ -31,11 +31,11 @@ class MainApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
             color: Colors.white,
           ),
-        )
-        cardTheme: CardTheme(
+        ),
+        cardTheme: CardThemeData(
           elevation: 2,
           shape: RoundedRectangleBorder(
-            borderRadius: 12,
+            borderRadius: BorderRadiusGeometry.circular(12),
           ),
           margin: EdgeInsets.symmetric(
             horizontal: 16,
@@ -53,7 +53,7 @@ class Tarefa {
   String titulo;
   bool concluida;
 
-  const Tarefa({
+    Tarefa({
     required this.id,
     required this.titulo,
     this.concluida = false});
@@ -139,7 +139,7 @@ class _TarefaScreen extends State<TarefaScreen> {
                 ),
                 SizedBox(height: 16,),
                 ElevatedButton(
-                  onPressed: _adicionarTarefa(),
+                  onPressed: _adicionarTarefa,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF00FBA5),
                     foregroundColor: Colors.white,
@@ -257,7 +257,7 @@ class _TarefaScreen extends State<TarefaScreen> {
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: _abrirBottomSheet,
         backgroundColor: const Color(0xFF00BFA5),
         foregroundColor: Colors.white,
         icon: const Icon(Icons.add),
