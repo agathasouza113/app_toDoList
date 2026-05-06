@@ -130,7 +130,7 @@ class _TarefaScreen extends State<TarefaScreen> {
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(
-                        color: Color(0xFF00FBA5),
+                        color: Color(0xFF00BFA5),
                         width: 2,
                       ),
                     ),
@@ -141,7 +141,7 @@ class _TarefaScreen extends State<TarefaScreen> {
                 ElevatedButton(
                   onPressed: _adicionarTarefa,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF00FBA5),
+                    backgroundColor: Color(0xFF00BFA5),
                     foregroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
