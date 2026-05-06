@@ -16,14 +16,14 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF00BFA5),
+          seedColor: _TarefaScreen._corTerciaria,
           brightness: Brightness.light,
         ),
 
         appBarTheme: const AppBarTheme(
           centerTitle: false,
           elevation: 0,
-          backgroundColor: Color(0xFF00BFA5),
+          backgroundColor: _TarefaScreen._corPrincipal,
           foregroundColor: Colors.white,
           titleTextStyle: TextStyle(
             fontFamily: 'Helvetica',
@@ -74,6 +74,11 @@ class _TarefaScreen extends State<TarefaScreen> {
   ];
 
   final TextEditingController _controller =TextEditingController();
+
+  static const Color _corPrincipal = Color(0xFF612D53);
+  static const Color _corSecundaria = Color(0xFF2C2C2C);
+  static const Color _corTerciaria = Color(0xFF853953);
+  static const Color _corClara = Color(0xFFF3F4F4);
   
   //um painel que aparece em cima da tela principal
   void _abrirBottomSheet(){
@@ -111,7 +116,7 @@ class _TarefaScreen extends State<TarefaScreen> {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF2d2d2d),
+                    color: _corSecundaria,
                   ),
                 ),
                 SizedBox(height: 16,),
@@ -122,7 +127,7 @@ class _TarefaScreen extends State<TarefaScreen> {
                   decoration: InputDecoration(
                     hintText: 'O que precisa ser feito?',
                     filled: true,
-                    fillColor: const Color(0xFFF5F5F5),
+                    fillColor: _corClara,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide.none,
@@ -130,7 +135,7 @@ class _TarefaScreen extends State<TarefaScreen> {
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(
-                        color: Color(0xFF00BFA5),
+                        color: _corPrincipal,
                         width: 2,
                       ),
                     ),
@@ -141,8 +146,8 @@ class _TarefaScreen extends State<TarefaScreen> {
                 ElevatedButton(
                   onPressed: _adicionarTarefa,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF00BFA5),
-                    foregroundColor: Colors.white,
+                    backgroundColor: _corPrincipal,
+                    foregroundColor: _corClara,
                     padding: EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadiusGeometry.circular(12),
@@ -172,7 +177,7 @@ class _TarefaScreen extends State<TarefaScreen> {
     setState(() {
       //.add método de lista para adicionar elementos
       _tarefas.add(Tarefa(
-        id: DateTime.now().toString(),
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
         titulo: texto,
       ));
     });
@@ -201,11 +206,11 @@ class _TarefaScreen extends State<TarefaScreen> {
   Widget build(BuildContext context){
     return Scaffold(
 // por aqui podemos definir algumas caracteristicas como cor de fundo app, tamanho fonte, cor letra,
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: const Color.fromARGB(63, 133, 57, 84),
       // quase todos os elementos
       // appbar - funciona como um header do html
       appBar: AppBar(
-        title: Text('2Do MinimaList'),
+        title: Text('To do MinimaList'),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
@@ -230,7 +235,7 @@ class _TarefaScreen extends State<TarefaScreen> {
           final tarefa = _tarefas[index];
           //Aqui se encontra o método para gesticular e o celular entender as coisa
           return Dismissible(
-            key: Key(tarefa.id),
+            key: UniqueKey(),
             direction: DismissDirection.endToStart,
             onDismissed: (_) => _deletarTarefa(tarefa.id),
             child: Card(
@@ -242,7 +247,7 @@ class _TarefaScreen extends State<TarefaScreen> {
               ),
               leading: Checkbox(
                 value: tarefa.concluida,
-                activeColor: const Color(0xFF00BFA5),
+                activeColor: _corPrincipal,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadiusGeometry.circular(4),
                 ),
@@ -261,7 +266,7 @@ class _TarefaScreen extends State<TarefaScreen> {
                 tarefa.concluida ? 'Concluida' : 'Pendente',
                 style: TextStyle(
                   fontSize: 12,
-                  color: tarefa.concluida ? const Color(0xFF00BFA5) : Colors.grey
+                  color: tarefa.concluida ? _corTerciaria : Colors.grey
                 ),
               ),
             ),
@@ -272,7 +277,7 @@ class _TarefaScreen extends State<TarefaScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _abrirBottomSheet,
-        backgroundColor: const Color(0xFF00BFA5),
+        backgroundColor: _corPrincipal,
         foregroundColor: Colors.white,
         icon: const Icon(Icons.add),
         label: const Text('Nova tarefa'),
