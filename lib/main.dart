@@ -172,7 +172,7 @@ class _TarefaScreen extends State<TarefaScreen> {
     setState(() {
       //.add método de lista para adicionar elementos
       _tarefas.add(Tarefa(
-        id: DateTime.now.toString(),
+        id: DateTime.now().toString(),
         titulo: texto,
       ));
     });
